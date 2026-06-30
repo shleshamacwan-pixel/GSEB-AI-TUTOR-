@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GSEB AI Tutor</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>📚 GSEB AI Tutor</h1>
+
+<p>Your Personal Board Exam Assistant</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<label>Upload GSEB Textbook</label>
+
+<input
+type="file"
+id="pdfFile"
+accept=".pdf">
+
+<p id="pdfStatus">
+No textbook uploaded.
+</p>
+
+<label>Select Subject</label>
+
+<select id="subject">
+
+<option>Gujarati</option>
+
+<option>Sanskrit</option>
+
+<option>English</option>
+
+</select>
+
+<label>Select Marks</label>
+
+<select id="marks">
+
+<option>2 Marks</option>
+
+<option>3 Marks</option>
+
+<option>4 Marks</option>
+
+<option>5 Marks</option>
+
+</select>
+
+<label>Your Question</label>
+
+<textarea
+id="question"
+placeholder="Type your question here..."></textarea>
+
+<button id="generate">
+Generate Answer
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Answer</h2>
+
+<div id="answer">
+Your answer will appear here.
+</div>
+
+</div>
+
+</div>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

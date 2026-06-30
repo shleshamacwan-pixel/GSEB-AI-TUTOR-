@@ -47,7 +47,8 @@ font-weight:bold;
 }
 
 select,
-textarea{
+textarea,
+input[type="file"]{
 width:100%;
 padding:12px;
 margin-bottom:15px;
@@ -85,11 +86,6 @@ border-radius:10px;
 white-space:pre-wrap;
 line-height:1.7;
 min-height:180px;
-}
-
-#pdfFile{
-width:100%;
-margin-bottom:15px;
 }
 
 #pdfStatus{

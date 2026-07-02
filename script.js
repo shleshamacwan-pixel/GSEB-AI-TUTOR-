@@ -1,35 +1,7 @@
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-let textbook = null;
-let textbookText = "";
-
-const pdfFile = document.getElementById("pdfFile");
-const pdfStatus = document.getElementById("pdfStatus");
-
-pdfFile.addEventListener("change", async () => {
-
-    textbook = pdfFile.files[0];
-
-    if (!textbook) return;
-
-    localStorage.setItem("textbookName", textbook.name);
-
-    pdfStatus.innerHTML = "📖 Reading textbook...";
-
-    const arrayBuffer = await textbook.arrayBuffer();
-
-    const pdf = await pdfjsLib.getDocument({
-        data: arrayBuffer
-    }).promise;
-
-    pdfStatus.innerHTML =
-        "📚 PDF Loaded (" + pdf.numPages + " pages)";
-});
-
 const button = document.getElementById("generate");
 const answer = document.getElementById("answer");
- button.addEventListener("click", async () => {
+
+button.addEventListener("click", async () => {
 
 const subject = document.getElementById("subject").value;
 const marks = document.getElementById("marks").value;
@@ -61,8 +33,7 @@ Instructions:
 6. If subject is Sanskrit, answer in Sanskrit wherever appropriate.
 7. If subject is English, answer in English.
 8. Make the answer suitable for GSEB Board Exams.`;
-
-try {
+    try {
 
 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
 
@@ -74,13 +45,16 @@ headers: {
 },
 
 body: JSON.stringify({
+
 model: "openrouter/auto",
+
 messages: [
 {
 role: "user",
 content: prompt
 }
 ]
+
 })
 
 });
@@ -88,6 +62,19 @@ content: prompt
 const data = await response.json();
 
 if (data.error) {
-    answer.innerHTML = "Error: " + data.error.message;
-    return;
+answer.innerHTML = "Error: " + data.error.message;
+return;
 }
+
+answer.innerHTML = data.choices[0].message.content;
+
+} catch (error) {
+
+console.error(error);
+
+answer.innerHTML =
+"Something went wrong. Please check your internet connection or API key.";
+
+}
+
+});

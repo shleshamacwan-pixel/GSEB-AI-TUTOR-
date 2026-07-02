@@ -14,26 +14,25 @@ if (question.trim() === "") {
 
 answer.innerHTML = "Generating answer...";
 
-const prompt = `You are an expert GSEB teacher.
+const prompt = `You are an expert GSEB Board teacher.
 
 Subject: ${subject}
-
 Marks: ${marks}
 
 Question:
 ${question}
 
 Instructions:
+1. Answer according to GSEB Board style.
+2. Use simple language.
+3. Give Introduction.
+4. Give the Main Answer.
+5. Give Conclusion.
+6. If subject is Gujarati, answer in Gujarati.
+7. If subject is Sanskrit, answer in Sanskrit wherever appropriate.
+8. If subject is English, answer in English.`;
 
-1. Write a proper Introduction.
-2. Write the Main Answer according to board exam style.
-3. Finish with a short Conclusion.
-4. Use simple language.
-5. If subject is Gujarati, answer in Gujarati.
-6. If subject is Sanskrit, answer in Sanskrit wherever appropriate.
-7. If subject is English, answer in English.
-8. Make the answer suitable for GSEB Board Exams.`;
-    try {
+try {
 
 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
 
@@ -58,12 +57,10 @@ content: prompt
 })
 
 });
+    const data = await response.json();
 
-const data = await response.json();
-
-if (data.error) {
-answer.innerHTML = "Error: " + data.error.message;
-return;
+if (!response.ok) {
+    throw new Error(data.error?.message || "Request failed");
 }
 
 answer.innerHTML = data.choices[0].message.content;
@@ -73,7 +70,7 @@ answer.innerHTML = data.choices[0].message.content;
 console.error(error);
 
 answer.innerHTML =
-"Something went wrong. Please check your internet connection or API key.";
+"Error: " + error.message;
 
 }
 
